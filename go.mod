@@ -1,4 +1,4 @@
-module github.com/BourgeoisBear/rasterm
+module github.com/deusnefum/rasterm
 
 go 1.16
 
