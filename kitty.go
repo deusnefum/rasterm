@@ -58,7 +58,7 @@ func (S Settings) KittyCopyPNGInline(out io.Writer, in io.Reader, nLen int64) (E
 	// SEND IN 4K CHUNKS
 	oWC := NewWriteChunker(out, 4096)
 	defer oWC.Flush()
-	bsHdr := []byte(fmt.Sprintf("a=T,f=100,z=-1,S=%d,", nLen))
+	bsHdr := []byte(fmt.Sprintf("a=T,f=100,z=-1,S=%d,x=%d,y=%x", nLen, S.X, S.Y))
 	oWC.CustomWriFunc = func(iWri io.Writer, bsDat []byte) (int, error) {
 
 		parts := [][]byte{
