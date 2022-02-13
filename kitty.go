@@ -16,7 +16,6 @@ const (
 
 // NOTE: uses $TERM, which is overwritten by tmux
 func IsTermKitty() bool {
-
 	V := GetEnvIdentifiers()
 	return V["TERM"] == "xterm-kitty"
 }
@@ -58,7 +57,11 @@ func (S Settings) KittyCopyPNGInline(out io.Writer, in io.Reader, nLen int64) (E
 	// SEND IN 4K CHUNKS
 	oWC := NewWriteChunker(out, 4096)
 	defer oWC.Flush()
-	bsHdr := []byte(fmt.Sprintf("a=T,f=100,z=-1,S=%d,x=%d,y=%x", nLen, S.X, S.Y))
+	mvCursor := 1
+	if S.MoveCursor {
+		mvCursor = 0
+	}
+	bsHdr := []byte(fmt.Sprintf("a=T,f=100,z=-1,S=%d,r=%d,c=%d,C=%d,", nLen, S.Rows, S.Columns, mvCursor))
 	oWC.CustomWriFunc = func(iWri io.Writer, bsDat []byte) (int, error) {
 
 		parts := [][]byte{

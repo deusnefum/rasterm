@@ -84,6 +84,8 @@ func testEx(iLog TestLogger, out io.Writer, mode string, testFiles []string) err
 
 	S := Settings{
 		EscapeTmux: false,
+		Rows: 5,
+		Columns:10,
 	}
 
 	for _, file := range testFiles {
